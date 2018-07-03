@@ -61,17 +61,14 @@ app
             discardRatio: cleanBool(req.params.discardRatio)
         };
 
-        console.log(args);
         try {
             containerTree = splitContainer(new Container(0, 0, args.width, args.height), args.levels, args);
             graphic = gm(args.width, args.height, settings.colors.white).quality(100).stroke(settings.colors.black, 3);
 
-            console.log('painting...');
             containerTree.paint(graphic);
 
-            console.log(graphic);
-            graphic.stream('jpg', (err, stdout) => {
-                res.set('Content-Type', 'image/jpg');
+            graphic.stream('png', (err, stdout) => {
+                res.set('Content-Type', 'image/png');
                 stdout.pipe(res);
             });
         } catch (err) {
