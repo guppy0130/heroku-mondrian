@@ -1,33 +1,9 @@
-const fs = require('fs');
-const gm = require('gm').subClass({imageMagick: true});
+const gm = require('gm');
 const express = require('express');
 const compress = require('compression');
 
 const app = express();
 const port = process.env.PORT || 3000;
-
-app
-    .get('/', (req, res) => {
-        res.send('hello world');
-    })
-    .get('/api', (req, res) => {
-        let containerTree, graphic;
-        try {
-            containerTree = splitContainer(new Container(0, 0, settings.width, settings.height), settings.levels);
-            graphic = gm(settings.width, settings.height, settings.colors.white);
-            console.log(gm(settings.width, settings.height, settings.colors.white).fill(settings.colors.blue).drawRectangle(0, 0, 30, 50));
-            containerTree.paint(graphic);
-            console.log(graphic);
-            graphic.stream((err, stdout) => {
-                stdout.pipe(res);
-            });
-        } catch (err) {
-            console.log(err);
-        }
-    })
-    .listen(port, () => {
-        console.log(`listening on port ${port}`);
-    });
 
 const settings = {
     colors: {
@@ -45,6 +21,61 @@ const settings = {
     height: 300,
     levels: 3
 };
+
+const clean = (input, o) => {
+    return (input > 0 ? input : o);
+};
+
+const cleanBool = (input) => {
+    if (input === 'true' || input === 't') {
+        return true;
+    } else if (input === 'false' || input === 'f') {
+        return false;
+    } else {
+        return settings.discardRatio;
+    }
+};
+
+app.use(compress());
+
+app
+    .get('/', (req, res) => {
+        res.sendFile('./index.html', {
+            root: __dirname
+        });
+    })
+    .get('/api/:width?/:height?/:levels?/:wRatio?/:hRatio?/:discardRatio?', (req, res) => {
+        let containerTree, graphic;
+        let args = {
+            width: clean(req.params.width, settings.width),
+            height: clean(req.params.height, settings.height),
+            levels: clean(req.params.levels, settings.levels),
+            wRatio: clean(req.params.wRatio, settings.wRatio),
+            hRatio: clean(req.params.hRatio, settings.hRatio),
+            discardRatio: cleanBool(req.params.discardRatio.toLowerCase())
+        };
+
+        try {
+            containerTree = splitContainer(new Container(0, 0, args.width, args.height), args.levels, args);
+            graphic = gm(args.width, args.height, settings.colors.white);
+
+            containerTree.paint(graphic);
+
+            graphic.stream('jpg', (err, stdout) => {
+                res.set('Content-Type', 'image/jpg');
+                stdout.pipe(res);
+            });
+        } catch (err) {
+            if (err == 'RangeError: Maximum call stack size exceeded') {
+                res.status(400).send('Maximum call stack size exceeded. Reduce argument values.');
+            } else {
+                res.status(400).send(`We\re not sure what the error was. Please contact the developer with this stacktrace.\n${err}`);
+            }
+        }
+    })
+    .listen(port, () => {
+        console.log(`listening on port ${port}`);
+    });
 
 const Tree = function(leaf) {
     // a basic tree
@@ -90,37 +121,37 @@ const random = {
     }
 };
 
-const splitContainer = (parent, iterations) => {
+const splitContainer = (parent, iterations, args) => {
     let root = new Tree(parent);
     if (iterations !== 0) {
-        let splits = split(parent);
-        root.left = splitContainer(splits[0], iterations - 1);
-        root.right = splitContainer(splits[1], iterations - 1);
+        let splits = split(parent, args);
+        root.left = splitContainer(splits[0], iterations - 1, args);
+        root.right = splitContainer(splits[1], iterations - 1, args);
     }
     return root;
 };
 
-const split = (container) => {
+const split = (container, args) => {
     let c1, c2;
 
     if (Math.random() >= 0.5) {
         c1 = new Container(container.x, container.y, random.value(1, container.w), container.h);
         c2 = new Container(container.x + c1.w, container.y, container.w - c1.w, container.h);
-        if (settings.discardRatio) {
+        if (args.discardRatio) {
             let r1 = c1.w / c1.h;
             let r2 = c2.w / c2.h;
-            if (r1 < settings.wRatio || r2 < settings.wRatio) {
-                return split(container);
+            if (r1 < args.wRatio || r2 < args.wRatio) {
+                return split(container, args);
             }
         }
     } else {
         c1 = new Container(container.x, container.y, container.w, random.value(1, container.h));
         c2 = new Container(container.x, container.y + c1.h, container.w, container.h - c1.h);
-        if (settings.discardRatio) {
+        if (args.discardRatio) {
             let r1 = c1.h / c1.w;
             let r2 = c2.h / c2.w;
-            if (r1 < settings.hRatio || r2 < settings.hRatio) {
-                return split(container);
+            if (r1 < args.hRatio || r2 < args.hRatio) {
+                return split(container, args);
             }
         }
     }

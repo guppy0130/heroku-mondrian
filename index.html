@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+    <head>
+        <style>
+            body {
+                font-size: 1.1em;
+                line-height: 1.4;
+                font-family: sans-serif;
+            }
+
+            table {
+                margin: 0 auto;
+            }
+
+            h1, h2, h3, h4, h5, h6, th {
+                text-align: center;
+            }
+
+            td {
+                padding: 0.5em 1em;
+            }
+
+            p, h1, h2, h3, h4, h5, h6 {
+                width: 75vw;
+                margin: 1em auto;
+            }
+
+            img {
+                width: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Heroku-Mondrian API Documentation</h1>
+        <h2>Get a bunch of random square pictures</h2>
+
+        <h2>GET /api/<em>width</em>/<em>height</em>/<em>levels</em>/<em>wRatio</em>/<em>hRatio</em>/<em>discardRatio</em></h2>
+        <p>Gets an image with all defaults. Non-conforming values are ignored and defaults applied instead.</p>
+        <h3>Resource URL</h3>
+        <p><a href="https://heroku-mondrian.herokuapp.com/api">https://heroku-mondrian.herokuapp.com/api</a></p>
+        <h3>Parameters</h3>
+        <table>
+            <tr>
+                <th>Argument</th>
+                <th>Default</th>
+                <th>Description</th>
+                <th>Required</th>
+                <th>Example</th>
+            </tr>
+            <tr>
+                <td>width</td>
+                <td>200px</td>
+                <td>Image width; integer &gt; 0</td>
+                <td>Optional</td>
+                <td><em>200</em></td>
+            </tr>
+            <tr>
+                <td>height</td>
+                <td>300px</td>
+                <td>Image height; integer &gt; 0</td>
+                <td>Optional</td>
+                <td><em>200</em></td>
+            </tr>
+            <tr>
+                <td>levels</td>
+                <td>3</td>
+                <td>Recursion depth. 2<sup>x</sup> number of squares. Integer &gt; 0. For best results, &lt; 10.</td>
+                <td>Optional</td>
+                <td><em>3</em></td>
+            </tr>
+            <tr>
+                <td>wRatio</td>
+                <td>0.45</td>
+                <td>Ensures vertical cuts don't make squares too thin. Float, 0 &gt; x &gt; 1</td>
+                <td>Optional</td>
+                <td><em>0.45</em></td>
+            </tr>
+            <tr>
+                <td>hRatio</td>
+                <td>0.45</td>
+                <td>Ensures horizontal cuts don't make squares too short. Float, 0 &gt; x &gt; 1</td>
+                <td>Optional</td>
+                <td><em>0.45</em></td>
+            </tr>
+            <tr>
+                <td>discardRatio</td>
+                <td>true</td>
+                <td>Whether to discard squares that are too thin or too short.</td>
+                <td>Optional</td>
+                <td><em>{true,false}</em></td>
+            </tr>
+        </table>
+
+        <h3>Example</h3>
+        <p>https://heroku-mondrian.herokuapp.com/api</p>
+        <p>
+            <img src="https://heroku-mondrian.herokuapp.com/api">
+        </p>
+        <p>https://heroku-mondrian.herokuapp.com/api/800/300/5/0.3/0.4/true</p>
+        <p>
+            <img src="https://heroku-mondrian.herokuapp.com/api/800/300/5/0.3/0.4/true">
+        </p>
+    </body>
+</html>
