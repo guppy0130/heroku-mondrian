@@ -68,6 +68,9 @@ app
             containerTree.paint(graphic);
 
             graphic.stream('png', (err, stdout) => {
+                if (err) {
+                    console.log(err);
+                }
                 res.set('Content-Type', 'image/png');
                 stdout.pipe(res);
             });
