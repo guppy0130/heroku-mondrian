@@ -27,6 +27,12 @@ const clean = (input, o) => {
 };
 
 const cleanBool = (input) => {
+    if (input === undefined) {
+        return settings.discardRatio;
+    }
+    if (input.length > 3) {
+        input = input.toLowerCase();
+    }
     if (input === 'true' || input === 't') {
         return true;
     } else if (input === 'false' || input === 'f') {
@@ -52,7 +58,7 @@ app
             levels: clean(req.params.levels, settings.levels),
             wRatio: clean(req.params.wRatio, settings.wRatio),
             hRatio: clean(req.params.hRatio, settings.hRatio),
-            discardRatio: cleanBool(req.params.discardRatio.toLowerCase())
+            discardRatio: cleanBool(req.params.discardRatio)
         };
 
         try {
