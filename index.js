@@ -42,7 +42,7 @@ const cleanBool = (input) => {
     }
 };
 
-app.use(compress());
+//app.use(compress());
 
 app
     .get('/', (req, res) => {
