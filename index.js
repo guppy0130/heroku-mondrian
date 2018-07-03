@@ -19,7 +19,8 @@ const settings = {
     hRatio: 0.45,
     width: 200,
     height: 300,
-    levels: 3
+    levels: 3,
+    ext: 'png'
 };
 
 const clean = (input, o) => {
@@ -50,7 +51,7 @@ app
             root: __dirname
         });
     })
-    .get('/api/:width?/:height?/:levels?/:wRatio?/:hRatio?/:discardRatio?', (req, res) => {
+    .get('/api/:width?/:height?/:levels?/:wRatio?/:hRatio?/:discardRatio?.:ext?', (req, res) => {
         let containerTree, graphic;
         let args = {
             width: clean(req.params.width, settings.width),
@@ -58,20 +59,22 @@ app
             levels: clean(req.params.levels, settings.levels),
             wRatio: clean(req.params.wRatio, settings.wRatio),
             hRatio: clean(req.params.hRatio, settings.hRatio),
-            discardRatio: cleanBool(req.params.discardRatio)
+            discardRatio: cleanBool(req.params.discardRatio),
+            ext: (req.params.ext.match(/(jpg|png|webp)/gi) ? req.params.ext : settings.ext)
         };
 
+        console.log(args.ext);
         try {
             containerTree = splitContainer(new Container(0, 0, args.width, args.height), args.levels, args);
             graphic = gm(args.width, args.height, settings.colors.white).quality(100).stroke(settings.colors.black, 3);
 
             containerTree.paint(graphic);
 
-            graphic.stream('png', (err, stdout) => {
+            graphic.stream(args.ext, (err, stdout) => {
                 if (err) {
                     console.log(err);
                 }
-                res.set('Content-Type', 'image/png');
+                res.set('Content-Type', `image/${args.ext.toLowerCase()}`);
                 stdout.pipe(res);
             });
         } catch (err) {
