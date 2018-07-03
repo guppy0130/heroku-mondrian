@@ -1,0 +1,19 @@
+{
+  "name": "heroku-mondrian",
+  "version": "1.0.0",
+  "description": "Node API for *magick to create lots of squares",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/guppy0130/heroku-mondrian.git"
+  },
+  "author": "guppy0130",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/guppy0130/heroku-mondrian/issues"
+  },
+  "homepage": "https://gitlab.com/guppy0130/heroku-mondrian#README"
+}
