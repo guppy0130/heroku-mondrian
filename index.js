@@ -64,7 +64,7 @@ app
         console.log(args);
         try {
             containerTree = splitContainer(new Container(0, 0, args.width, args.height), args.levels, args);
-            graphic = gm(args.width, args.height, settings.colors.white);
+            graphic = gm(args.width, args.height, settings.colors.white).quality(100);
 
             console.log('painting...');
             containerTree.paint(graphic);
