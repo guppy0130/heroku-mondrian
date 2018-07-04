@@ -63,7 +63,6 @@ app
             ext: (req.params.ext.match(/(jpg|png|webp)/gi) ? req.params.ext : settings.ext)
         };
 
-        console.log(args.ext);
         try {
             containerTree = splitContainer(new Container(0, 0, args.width, args.height), args.levels, args);
             graphic = gm(args.width, args.height, settings.colors.white).quality(100).stroke(settings.colors.black, 3);
