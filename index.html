@@ -30,7 +30,7 @@
         <h1>Heroku-Mondrian API Documentation</h1>
         <h2>Get a bunch of random square pictures</h2>
 
-        <h2>GET /api/<em>width</em>/<em>height</em>/<em>levels</em>/<em>wRatio</em>/<em>hRatio</em>/<em>discardRatio</em></h2>
+        <h2>GET /api/<em>width</em>/<em>height</em>/<em>levels</em>/<em>wRatio</em>/<em>hRatio</em>/<em>discardRatio</em>.<em>ext</em></h2>
         <p>Gets an image with all defaults. Non-conforming values are ignored and defaults applied instead.</p>
         <h3>Resource URL</h3>
         <p><a href="https://heroku-mondrian.herokuapp.com/api">https://heroku-mondrian.herokuapp.com/api</a></p>
@@ -85,16 +85,25 @@
                 <td>Optional</td>
                 <td><em>{true,false}</em></td>
             </tr>
+            <tr>
+                <td>ext</td>
+                <td>png</td>
+                <td>Extension to receive. Must be one of `jpg`, `webp`, or `png`.</td>
+                <td>Optional</td>
+                <td><em>{png,jpg,webp}</em></td>
+            </tr>
         </table>
 
         <h3>Example</h3>
         <p>https://heroku-mondrian.herokuapp.com/api</p>
         <p>
             <img src="https://heroku-mondrian.herokuapp.com/api">
+            <img src="http://localhost:3000/api">
         </p>
-        <p>https://heroku-mondrian.herokuapp.com/api/800/300/5/0.3/0.4/true</p>
+        <p>https://heroku-mondrian.herokuapp.com/api/800/300/5/0.3/0.4/true.jpg</p>
         <p>
-            <img src="https://heroku-mondrian.herokuapp.com/api/800/300/5/0.3/0.4/true">
+            <img src="https://heroku-mondrian.herokuapp.com/api/800/300/5/0.3/0.4/true.jpg">
+            <img src="http://localhost:3000/api/800/300/5/0.3/0.4/true.jpg">
         </p>
     </body>
 </html>

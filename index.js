@@ -23,23 +23,30 @@ const settings = {
     ext: 'png'
 };
 
-const clean = (input, o) => {
-    return (input > 0 ? input : o);
-};
-
-const cleanBool = (input) => {
-    if (input === undefined) {
-        return settings.discardRatio;
-    }
-    if (input.length > 3) {
-        input = input.toLowerCase();
-    }
-    if (input === 'true' || input === 't') {
-        return true;
-    } else if (input === 'false' || input === 'f') {
-        return false;
-    } else {
-        return settings.discardRatio;
+const clean = {
+    number: (input, o) => {
+        return (input > 0 ? input : o);
+    },
+    bool: (input) => {
+        if (input === undefined) {
+            return settings.discardRatio;
+        }
+        if (input.length > 3) {
+            input = input.toLowerCase();
+        }
+        if (input === 'true' || input === 't') {
+            return true;
+        } else if (input === 'false' || input === 'f') {
+            return false;
+        } else {
+            return settings.discardRatio;
+        }
+    },
+    ext: (input) => {
+        if (input && input.match(/(jpg|png|webp)/gi)) {
+            return input;
+        }
+        return settings.ext;
     }
 };
 
@@ -54,13 +61,13 @@ app
     .get('/api/:width?/:height?/:levels?/:wRatio?/:hRatio?/:discardRatio?.:ext?', (req, res) => {
         let containerTree, graphic;
         let args = {
-            width: clean(req.params.width, settings.width),
-            height: clean(req.params.height, settings.height),
-            levels: clean(req.params.levels, settings.levels),
-            wRatio: clean(req.params.wRatio, settings.wRatio),
-            hRatio: clean(req.params.hRatio, settings.hRatio),
-            discardRatio: cleanBool(req.params.discardRatio),
-            ext: (req.params.ext.match(/(jpg|png|webp)/gi) ? req.params.ext : settings.ext)
+            width: clean.number(req.params.width, settings.width),
+            height: clean.number(req.params.height, settings.height),
+            levels: clean.number(req.params.levels, settings.levels),
+            wRatio: clean.number(req.params.wRatio, settings.wRatio),
+            hRatio: clean.number(req.params.hRatio, settings.hRatio),
+            discardRatio: clean.bool(req.params.discardRatio),
+            ext: clean.ext(req.params.ext)
         };
 
         try {
