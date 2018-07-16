@@ -51,11 +51,12 @@ const clean = {
 };
 
 app.use(compress());
+app.set('view engine', 'hbs');
 
 app
     .get('/', (req, res) => {
-        res.sendFile('./index.html', {
-            root: __dirname
+        res.render('index', {
+            port: port
         });
     })
     .get('/api/:width?/:height?/:levels?/:wRatio?/:hRatio?/:discardRatio?.:ext?', (req, res) => {
@@ -80,6 +81,7 @@ app
                 if (err) {
                     console.log(err);
                 }
+                console.log('written image');
                 res.set('Content-Type', `image/${args.ext.toLowerCase()}`);
                 stdout.pipe(res);
             });
