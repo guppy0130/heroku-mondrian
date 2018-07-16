@@ -1,0 +1,6 @@
+.env
+.git/
+node_modules
+.gitignore
+.eslinstrc.json
+README.md

@@ -81,7 +81,6 @@ app
                 if (err) {
                     console.log(err);
                 }
-                console.log('written image');
                 res.set('Content-Type', `image/${args.ext.toLowerCase()}`);
                 stdout.pipe(res);
             });
