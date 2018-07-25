@@ -1,101 +1,155 @@
 <!doctype html>
-<html>
+<html lang="en">
     <head>
+        <title>Heroku-Mondrian API</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css?family=Sunflower:300" rel="stylesheet">
         <style>
             body {
                 font-size: 1.1em;
+                font-family: 'Sunflower', sans-serif;
                 line-height: 1.4;
-                font-family: sans-serif;
+                overflow-x: hidden;
             }
 
-            table {
-                margin: 0 auto;
-            }
-
-            h1, h2, h3, h4, h5, h6, th {
+            div {
+                overflow-x: scroll;
                 text-align: center;
             }
 
-            td {
+            table {
+                border-collapse: collapse;
+                margin: 0 auto;
+            }
+
+            h1, h2, th {
+                text-align: center;
+            }
+
+            td, th {
+                border-bottom: 1px solid #e1e1e1;
                 padding: 0.5em 1em;
             }
 
-            p, h1, h2, h3, h4, h5, h6 {
-                width: 75vw;
+            p, h1, h2, ul {
                 margin: 1em auto;
+                width: 66vw;
+            }
+
+            ul {
+                list-style-type: circle;
+            }
+
+            code {
+                word-wrap: break-word;
+            }
+
+            @media screen and (max-width: 1000px) {
+                p, h1, h2, ul {
+                    margin: 1em auto;
+                    width: 80vw;
+                }
+
+                table {
+                    min-width: 1000px;
+                }
+            }
+
+            @media screen and (max-width: 800px) {
+                body {
+                    font-size: 1.4em;
+                }
+
+                p, h1, h2, ul {
+                    margin: 1em auto;
+                    width: 80vw;
+                }
+
+                td, th {
+                    padding: 0.1em 0.3em;
+                    text-align: center;
+                    font-size: 0.8em;
+                }
             }
         </style>
     </head>
     <body>
         <h1>Heroku-Mondrian API</h1>
 
-        <h2>GET /api/<em>width</em>/<em>height</em>/<em>levels</em>/<em>wRatio</em>/<em>hRatio</em>/<em>discardRatio</em><em>.ext</em></h2>
-        <p>Gets an image with all defaults. Non-conforming values are ignored and defaults are used.</p>
-        <h3>Parameters</h3>
-        <table>
-            <tr>
-                <th>Argument</th>
-                <th>Default</th>
-                <th>Description</th>
-                <th>Required</th>
-                <th>Example</th>
-            </tr>
-            <tr>
-                <td>width</td>
-                <td>200px</td>
-                <td>Image width; integer &gt; 0</td>
-                <td>Optional</td>
-                <td><em>200</em></td>
-            </tr>
-            <tr>
-                <td>height</td>
-                <td>300px</td>
-                <td>Image height; integer &gt; 0</td>
-                <td>Optional</td>
-                <td><em>200</em></td>
-            </tr>
-            <tr>
-                <td>levels</td>
-                <td>3</td>
-                <td>Recursion depth. 2<sup>x</sup> number of squares. Integer &gt; 0. For best results, &lt; 10.</td>
-                <td>Optional</td>
-                <td><em>3</em></td>
-            </tr>
-            <tr>
-                <td>wRatio</td>
-                <td>0.45</td>
-                <td>Ensures vertical cuts don't make squares too thin. Float, 0 &gt; x &gt; 1</td>
-                <td>Optional</td>
-                <td><em>0.45</em></td>
-            </tr>
-            <tr>
-                <td>hRatio</td>
-                <td>0.45</td>
-                <td>Ensures horizontal cuts don't make squares too short. Float, 0 &gt; x &gt; 1</td>
-                <td>Optional</td>
-                <td><em>0.45</em></td>
-            </tr>
-            <tr>
-                <td>discardRatio</td>
-                <td>true</td>
-                <td>Whether to discard squares that are too thin or too short.</td>
-                <td>Optional</td>
-                <td><em>{true,false}</em></td>
-            </tr>
-            <tr>
-                <td>ext</td>
-                <td>.png</td>
-                <td>Extension to receive. Must be one of `jpg`, `webp`, or `png`.</td>
-                <td>Optional</td>
-                <td><em>{png,jpg,webp}</em></td>
-            </tr>
-        </table>
+        <h2>Notes</h2>
+        <p>Resource URL: <code>/api/<em>width</em>/<em>height</em>/<em>levels</em>/<em>wRatio</em>/<em>hRatio</em>/<em>discardRatio</em><em>.ext</em></code></p>
+        <ul>
+            <li>Non-conforming values are ignored and replaced with defaults</li>
+            <li>Would recommend using a 2x size for retina displays</li>
+        </ul>
+        <h2>Parameters</h2>
+        <div>
+            <table>
+                <tr>
+                    <th>Argument</th>
+                    <th>Default</th>
+                    <th>Description</th>
+                    <th>Required</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td><code>width</code></td>
+                    <td><code>200px</code></td>
+                    <td>Image width; integer &gt; 0</td>
+                    <td>Optional</td>
+                    <td><code>200</code></td>
+                </tr>
+                <tr>
+                    <td><code>height</code></td>
+                    <td><code>300px</code></td>
+                    <td>Image height; integer &gt; 0</td>
+                    <td>Optional</td>
+                    <td><code>200</code></td>
+                </tr>
+                <tr>
+                    <td><code>levels</code></td>
+                    <td><code>3</code></td>
+                    <td>Recursion depth. 2<sup>x</sup> number of squares. Integer &gt; 0. For best results, &lt; 10.</td>
+                    <td>Optional</td>
+                    <td><code>3</code></td>
+                </tr>
+                <tr>
+                    <td><code>wRatio</code></td>
+                    <td><code>0.45</code></td>
+                    <td>Ensures vertical cuts don't make squares too thin. Float, 0 &gt; x &gt; 1</td>
+                    <td>Optional</td>
+                    <td><code>0.45</code></td>
+                </tr>
+                <tr>
+                    <td><code>hRatio</code></td>
+                    <td><code>0.45</code></td>
+                    <td>Ensures horizontal cuts don't make squares too short. Float, 0 &gt; x &gt; 1</td>
+                    <td>Optional</td>
+                    <td><code>0.45</code></td>
+                </tr>
+                <tr>
+                    <td><code>discardRatio</code></td>
+                    <td><code>true</code></td>
+                    <td>Whether to discard squares that are too thin or too short.</td>
+                    <td>Optional</td>
+                    <td><code>{true,false}</code></td>
+                </tr>
+                <tr>
+                    <td><code>ext</code></td>
+                    <td><code>.png</code></td>
+                    <td>Extension to receive. Must be one of `jpg`, `webp`, or `png`.</td>
+                    <td>Optional</td>
+                    <td><code>{png,jpg,webp}</code></td>
+                </tr>
+            </table>
+        </div>
 
         <h2>Examples</h2>
-        <p>https://heroku-mondrian.herokuapp.com/api</p>
-        <p><img src="https://heroku-mondrian.herokuapp.com/api"></p>
+        <p><code>https://heroku-mondrian.herokuapp.com/api</code></p>
+        <div><img src="https://heroku-mondrian.herokuapp.com/api"></div>
 
-        <p>https://heroku-mondrian.herokuapp.com/api/800/300/5/0.3/0.4/true.jpg</p>
-        <p><img src="https://heroku-mondrian.herokuapp.com/api/800/300/5/0.3/0.4/true.jpg"></p>
+        <p><code>https://heroku-mondrian.herokuapp.com/api/800/300/5/0.3/0.4/true.jpg</code></p>
+        <div><img src="https://heroku-mondrian.herokuapp.com/api/800/300/5/0.3/0.4/true.jpg"></div>
     </body>
 </html>
