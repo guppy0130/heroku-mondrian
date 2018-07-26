@@ -1,8 +1,8 @@
 const gm = require('gm');
 const express = require('express');
 const compress = require('compression');
-const uuid = require('uuid/v4');
-const del = require('del');
+//const uuid = require('uuid/v4');
+//const del = require('del');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -78,27 +78,27 @@ app
 
             containerTree.paint(graphic);
 
-            const location = `./temp/${uuid()}.${args.ext}`;
-            graphic.write(location, (err) => {
-                if (!err) {
-                    res.set('Content-Type', `image/${args.ext.toLowerCase()}`);
-                    res.sendFile(location, {
-                        root: __dirname
-                    });
-                    return del(location);
-                } else {
-                    res.sendStatus(500);
-                    console.log(err);
-                }
-            });
-
-//            graphic.stream(args.ext, (err, stdout) => {
-//                if (err) {
+//            const location = `./temp/${uuid()}.${args.ext}`;
+//            graphic.write(location, (err) => {
+//                if (!err) {
+//                    res.set('Content-Type', `image/${args.ext.toLowerCase()}`);
+//                    res.sendFile(location, {
+//                        root: __dirname
+//                    });
+//                    return del(location);
+//                } else {
+//                    res.sendStatus(500);
 //                    console.log(err);
 //                }
-//                res.set('Content-Type', `image/${args.ext.toLowerCase()}`);
-//                stdout.pipe(res);
 //            });
+
+            graphic.stream(args.ext, (err, stdout) => {
+                if (err) {
+                    console.log(err);
+                }
+                res.set('Content-Type', `image/${args.ext.toLowerCase()}`);
+                stdout.pipe(res);
+            });
         } catch (err) {
             if (err == 'RangeError: Maximum call stack size exceeded') {
                 res.status(400).send('Maximum call stack size exceeded. Reduce argument values.');
