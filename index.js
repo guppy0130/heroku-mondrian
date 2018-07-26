@@ -1,8 +1,6 @@
 const gm = require('gm');
 const express = require('express');
 const compress = require('compression');
-//const uuid = require('uuid/v4');
-//const del = require('del');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -77,20 +75,6 @@ app
             graphic = gm(args.width, args.height, settings.colors.white).quality(100).stroke(settings.colors.black, 3);
 
             containerTree.paint(graphic);
-
-//            const location = `./temp/${uuid()}.${args.ext}`;
-//            graphic.write(location, (err) => {
-//                if (!err) {
-//                    res.set('Content-Type', `image/${args.ext.toLowerCase()}`);
-//                    res.sendFile(location, {
-//                        root: __dirname
-//                    });
-//                    return del(location);
-//                } else {
-//                    res.sendStatus(500);
-//                    console.log(err);
-//                }
-//            });
 
             graphic.stream(args.ext, (err, stdout) => {
                 if (err) {
