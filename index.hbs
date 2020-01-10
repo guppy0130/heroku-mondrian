@@ -14,7 +14,7 @@
             }
 
             div {
-                overflow-x: scroll;
+                overflow-x: auto;
                 text-align: center;
             }
 
@@ -90,66 +90,58 @@
                     <th>Argument</th>
                     <th>Default</th>
                     <th>Description</th>
-                    <th>Required</th>
                     <th>Example</th>
                 </tr>
                 <tr>
                     <td><code>width</code></td>
                     <td><code>200px</code></td>
                     <td>Image width; integer &gt; 0</td>
-                    <td>Optional</td>
                     <td><code>200</code></td>
                 </tr>
                 <tr>
                     <td><code>height</code></td>
                     <td><code>300px</code></td>
                     <td>Image height; integer &gt; 0</td>
-                    <td>Optional</td>
                     <td><code>200</code></td>
                 </tr>
                 <tr>
                     <td><code>levels</code></td>
                     <td><code>3</code></td>
                     <td>Recursion depth. 2<sup>x</sup> number of squares. Integer &gt; 0. For best results, &lt; 10.</td>
-                    <td>Optional</td>
                     <td><code>3</code></td>
                 </tr>
                 <tr>
                     <td><code>wRatio</code></td>
                     <td><code>0.45</code></td>
                     <td>Ensures vertical cuts don't make squares too thin. Float, 0 &gt; x &gt; 1</td>
-                    <td>Optional</td>
                     <td><code>0.45</code></td>
                 </tr>
                 <tr>
                     <td><code>hRatio</code></td>
                     <td><code>0.45</code></td>
                     <td>Ensures horizontal cuts don't make squares too short. Float, 0 &gt; x &gt; 1</td>
-                    <td>Optional</td>
                     <td><code>0.45</code></td>
                 </tr>
                 <tr>
                     <td><code>discardRatio</code></td>
                     <td><code>true</code></td>
                     <td>Whether to discard squares that are too thin or too short.</td>
-                    <td>Optional</td>
                     <td><code>false</code></td>
                 </tr>
                 <tr>
                     <td><code>ext</code></td>
                     <td><code>png</code></td>
                     <td>Extension to receive. Must be one of `jpg`, `webp`, or `png`.</td>
-                    <td>Optional</td>
                     <td><code>webp</code></td>
                 </tr>
             </table>
         </div>
 
         <h2>Examples</h2>
-        <p><code>https://heroku-mondrian.herokuapp.com/api</code></p>
-        <div><img src="https://heroku-mondrian.herokuapp.com/api"></div>
+        <p><code>{{ domain }}/api</code></p>
+        <div><img src="{{ domain }}/api"></div>
 
-        <p><code>https://heroku-mondrian.herokuapp.com/api/800/300/5/0.3/0.4/true.jpg</code></p>
-        <div><img src="https://heroku-mondrian.herokuapp.com/api/800/300/5/0.3/0.4/true.jpg"></div>
+        <p><code>{{ domain }}/api/800/300/5/0.3/0.4/true.jpg</code></p>
+        <div><img src="{{ domain }}/api/800/300/5/0.3/0.4/true.jpg"></div>
     </body>
 </html>

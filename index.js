@@ -1,9 +1,11 @@
 const gm = require('gm');
 const express = require('express');
+const hbs = require('express-handlebars');
 const compress = require('compression');
 
 const app = express();
 const port = process.env.PORT || 3000;
+const domain = process.env.NODE_ENV === 'production' ? 'https://heroku-mondrian.herokuapp.com' : 'http://localhost:3000';
 
 const settings = {
     colors: {
@@ -50,12 +52,19 @@ const clean = {
     }
 };
 
+app.engine('.hbs', hbs({
+    extname: '.hbs'
+}));
+app.set('view engine', '.hbs');
+app.enable('view cache');
+app.set('views', __dirname);
 app.use(compress());
 
 app
     .get('/', (req, res) => {
-        res.sendFile('./index.html', {
-            root: __dirname
+        res.render('index', {
+            layout: false,
+            domain: domain
         });
     })
     .get('/api/:width?/:height?/:levels?/:wRatio?/:hRatio?/:discardRatio?.:ext?', (req, res) => {

@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+    - lts/*
+addons:
+    apt:
+        packages:
+            - libgconf-2-4
+            - graphicsmagick
+            - libpng-dev
+            - libjpeg-turbo-dev
+cache:
+    npm: true
+    directories:
+        - ~/.cache
