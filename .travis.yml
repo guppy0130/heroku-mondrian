@@ -15,3 +15,4 @@ cache:
     npm: true
     directories:
         - ~/.cache
+script: npm run ci
