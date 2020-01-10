@@ -1,5 +1,7 @@
 # Heroku Mondrian
 
+[![Build Status](https://travis-ci.com/guppy0130/heroku-mondrian.svg?branch=master)](https://travis-ci.com/guppy0130/heroku-mondrian)
+
 ## Create lots of random squares server side
 
 ### Installation
