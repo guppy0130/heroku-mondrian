@@ -6,3 +6,4 @@
 /.config/
 /.npm/
 /.env
+*.swp

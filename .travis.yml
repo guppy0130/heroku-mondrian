@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+    - lts/*
+addons:
+    apt:
+        packages:
+            - libgconf-2-4
+            - graphicsmagick
+            - libpng-dev
+            - libjpeg-turbo8-dev
+            - libwebp-dev
+            - zlib1g-dev
+            - libjasper-dev
+cache:
+    npm: true
+    directories:
+        - ~/.cache
+script: npm run ci
