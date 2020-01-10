@@ -1,6 +1,6 @@
 graphicsmagick
 libpng-dev
 libwebp-dev
-libjpeg-turbo-dev
+libjpeg-turbo8-dev
 zlib1g-dev
 libjasper-dev

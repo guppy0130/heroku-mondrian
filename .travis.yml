@@ -7,7 +7,10 @@ addons:
             - libgconf-2-4
             - graphicsmagick
             - libpng-dev
-            - libjpeg-turbo-dev
+            - libjpeg-turbo8-dev
+            - libwebp-dev
+            - zlib1g-dev
+            - libjasper-dev
 cache:
     npm: true
     directories:
