@@ -1,18 +1,20 @@
+---
 language: node_js
-dist: bionic
+dist: focal
 node_js:
-    - lts/*
+  - lts/*
+  - node
 addons:
-    apt:
-        packages:
-            - libgconf-2-4
-            - graphicsmagick
-            - libpng-dev
-            - libjpeg-turbo8-dev
-            - libwebp-dev
-            - zlib1g-dev
+  apt:
+    packages:
+      - libgconf-2-4
+      - graphicsmagick
+      - libpng-dev
+      - libjpeg-turbo8-dev
+      - libwebp-dev
+      - zlib1g-dev
 cache:
-    npm: true
-    directories:
-        - ~/.cache
+  npm: true
+  directories:
+    - ~/.cache
 script: npm run ci
